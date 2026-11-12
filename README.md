@@ -40,7 +40,7 @@ La solución está dividida en tres capas principales:
 ## 🚀 Configuración y Ejecución Local
 
 ### Prerrequisitos
-- .NET 8 SDK
+- .NET 10 SDK
 - PostgreSQL
 - IDE de Arduino (para el código del microcontrolador)
 
@@ -56,3 +56,54 @@ cd EcoRutas-IoT-Platform
 # Compilar y ejecutar
 dotnet build
 dotnet run
+```
+### 2. Configuración de Credenciales y Variables de Entorno
+
+Antes de ejecutar el sistema, es obligatorio configurar las credenciales locales de la base de datos, la seguridad JWT y la conexión del hardware.
+
+**Para el Backend (.NET 8):**
+Crea un archivo `appsettings.Development.json` en la raíz de la carpeta del backend con la siguiente estructura, reemplazando con tus propios datos:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=ecorutas_db;Username=postgres;Password=tu_password"
+  },
+  "JwtSettings": {
+    "SecretKey": "TU_CLAVE_SECRETA_SUPER_SEGURA_AQUI",
+    "Issuer": "EcoRutasAPI",
+    "Audience": "EcoRutasUsers"
+  }
+}
+```
+### 3. Configuración del Hardware (ESP32 / Arduino)
+
+Sigue estos pasos para compilar y cargar el firmware en el microcontrolador.
+
+### Prerrequisitos
+- IDE de Arduino (v2.x recomendado).
+- Paquete de tarjetas ESP32 instalado en el gestor de tarjetas.
+- Cable de datos USB a Micro-USB/USB-C (con soporte de transferencia de datos).
+
+## 1. Conexión del Hardware (Pinout)
+Conecta el sensor ultrasónico HC-SR04 al ESP32 siguiendo esta configuración:
+* **VCC:** 5V / VIN (o 3.3V dependiendo de la versión de tu sensor)
+* **GND:** GND
+* **TRIG:** Pin 5
+* **ECHO:** Pin 18
+
+## 2. Configuración de Credenciales
+Crea un archivo llamado `secrets.h` en el mismo directorio de tu script `.ino` / `.cpp` principal. Este archivo es ignorado por Git para proteger tus redes Wi-Fi:
+
+```cpp
+#ifndef SECRETS_H
+#define SECRETS_H
+
+#define SECRET_SSID_1 "TU_WIFI_PRINCIPAL"
+#define SECRET_PASS_1 "CONTRASEÑA_PRINCIPAL"
+
+#define SECRET_SSID_2 "TU_WIFI_RESPALDO"
+#define SECRET_PASS_2 "CONTRASEÑA_RESPALDO"
+
+#endif
+```
