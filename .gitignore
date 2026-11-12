@@ -1,0 +1,32 @@
+# C# / .NET 8 Backend
+**/bin/
+**/obj/
+**/.vs/
+*.user
+*.suo
+appsettings.Development.json
+
+
+# Bases de Datos Locales
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+ecorutas.db
+
+# Arduino / ESP32 (IoT)
+*.hex
+*.elf
+*.o
+*.bin
+build/
+secrets.h
+
+# Frontend & Entorno
+node_modules/
+.env
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+desktop.ini
